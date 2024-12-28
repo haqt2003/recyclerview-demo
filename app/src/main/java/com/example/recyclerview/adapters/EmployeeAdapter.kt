@@ -9,7 +9,8 @@ import com.example.recyclerview.R
 import com.example.recyclerview.databinding.LayoutItemBinding
 
 class EmployeeAdapter(
-    private var items: MutableList<Employee>, private val onAdapterListener: OnAdapterListener
+    private var items: MutableList<Employee>,
+    private val onAdapterListener: OnAdapterListener
 ) : RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>() {
 
     private var isLongClickMode = false

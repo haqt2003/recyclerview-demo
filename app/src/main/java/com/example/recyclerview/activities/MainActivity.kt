@@ -31,9 +31,11 @@ class MainActivity : AppCompatActivity(), EmployeeAdapter.OnAdapterListener {
             if (result.resultCode == RESULT_OK) {
                 val data = result.data
                 data?.let {
-                    val employee = it.getSerializableExtra("employee")
-                    items.add(employee as Employee)
-                    adapter.notifyItemInserted(items.size - 1)
+                    val employee = it.getParcelableExtra<Employee>("employee")
+                    if (employee != null) {
+                        items.add(employee)
+                        adapter.notifyItemInserted(items.size - 1)
+                    }
                 }
             }
         }
@@ -43,12 +45,15 @@ class MainActivity : AppCompatActivity(), EmployeeAdapter.OnAdapterListener {
             if (result.resultCode == RESULT_OK) {
                 val data = result.data
                 data?.let {
-                    val employee = it.getSerializableExtra("employee") as Employee
-                    val employeeEdit = items.find { it.id == employee.id }
-                    employeeEdit?.name = employee.name
-                    employeeEdit?.department = employee.department
-                    employeeEdit?.status = employee.status
-                    adapter.notifyDataSetChanged()
+                    val employee = it.getParcelableExtra<Employee>("employee")
+                    val employeeEdit = items.find { it.id == employee?.id }
+                    val position = items.indexOfFirst { it.id == employee?.id }
+                    employeeEdit?.let {
+                        it.name = employee?.name.toString()
+                        it.department = employee?.department.toString()
+                        it.status = employee?.status.toString()
+                        adapter.notifyItemChanged(position)
+                    }
                 }
             }
         }

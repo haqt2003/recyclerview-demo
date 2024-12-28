@@ -27,11 +27,11 @@ class DetailActivity : AppCompatActivity() {
             finish()
         }
 
-        val employee = intent.getSerializableExtra("employee") as Employee
+        val employee = intent.getParcelableExtra<Employee>("employee")
 
-        binding.tvId.text = employee.id
-        binding.tvName.text = employee.name
-        binding.tvDepartment.text = employee.department
-        binding.tvStatus.text = employee.status
+        binding.tvId.text = employee?.id
+        binding.tvName.text = employee?.name
+        binding.tvDepartment.text = employee?.department
+        binding.tvStatus.text = employee?.status
     }
 }

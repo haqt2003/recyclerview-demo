@@ -40,16 +40,19 @@ class EditActivity : AppCompatActivity() {
         }
 
         val intent = intent
-        val employee = intent.getSerializableExtra("employee") as Employee
-        binding.etId.setText(employee.id)
-        binding.etName.setText(employee.name)
-        binding.spDepartment.setSelection(departments.indexOf(employee.department))
-        binding.spStatus.setSelection(statuses.indexOf(employee.status))
+        val employee = intent.getParcelableExtra<Employee>("employee")
+
+        employee?.let {
+            binding.etId.setText(it.id)
+            binding.etName.setText(it.name)
+            binding.spDepartment.setSelection(departments.indexOf(it.department))
+            binding.spStatus.setSelection(statuses.indexOf(it.status))
+        }
 
         binding.btSave.setOnClickListener {
             val resultIntent = Intent()
             val editedEmployee = Employee(
-                employee.id,
+                binding.etId.text.toString(),
                 binding.etName.text.toString(),
                 binding.spDepartment.selectedItem.toString(),
                 binding.spStatus.selectedItem.toString()
